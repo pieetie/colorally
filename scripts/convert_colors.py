@@ -1,21 +1,21 @@
 #!/usr/bin/env python3 
 
-def convert_to_protanopia(color):
-    """ 
+def convert_to_protanopia(hex_color):
+    """
     """
     pass
 
-def convert_to_deuteranopia(color):
+def convert_to_deuteranopia(hex_color):
     """ 
     """
     pass 
 
-def convert_to_tritanopia(color):
+def convert_to_tritanopia(hex_color):
     """ 
     """
     pass
 
-def convert_to_grey_scale(color):
+def convert_to_grey_scale(hex_color):
     """ 
     """
     pass 
