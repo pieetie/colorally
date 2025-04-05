@@ -11,7 +11,7 @@ def generate_random_color():
     b = random.randint(0, 255)
     return f'#{r:02x}{g:02x}{b:02x}'
 
-def generate_pair():
+def generate_random_pair():
     """
     Generate a random pair of colors and return it as a list
     """
@@ -22,4 +22,4 @@ def generate_pair():
     return pair
 
 if __name__ == "__main__":
-    print(generate_pair())
+    print(generate_random_pair())
