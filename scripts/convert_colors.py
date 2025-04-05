@@ -75,7 +75,7 @@ def convert_to_tritanopia(hex_color):
     Convert a hex color to simulate how it would appear to someone with tritanopia
     using the Machado et al. model
 
-    TO DO : Future implementations should prioritize Brettel’s matrix which is recommended specifically for tritanopia.
+    TO DO : Future implementations should prioritize Brettel's matrix which is recommended specifically for tritanopia.
     """
     rgb = normalize_rgb(hex_to_rgb(hex_color))
     
@@ -112,7 +112,32 @@ def convert_colors(pair):
     - tritanopia
     - achromatopsia (grey scale)
     """
-    pass
+    result = {
+        "color1": {},
+        "color2": {}
+    }
+    
+    # Normal vision
+    result["color1"]["normal"] = pair[0]
+    result["color2"]["normal"] = pair[1]
+    
+    # Protanopia
+    result["color1"]["protanopia"] = convert_to_protanopia(pair[0])
+    result["color2"]["protanopia"] = convert_to_protanopia(pair[1])
+    
+    # Deuteranopia
+    result["color1"]["deuteranopia"] = convert_to_deuteranopia(pair[0])
+    result["color2"]["deuteranopia"] = convert_to_deuteranopia(pair[1])
+    
+    # Tritanopia
+    result["color1"]["tritanopia"] = convert_to_tritanopia(pair[0])
+    result["color2"]["tritanopia"] = convert_to_tritanopia(pair[1])
+    
+    # Grey scale
+    result["color1"]["grey scale"] = convert_to_grey_scale(pair[0])
+    result["color2"]["grey scale"] = convert_to_grey_scale(pair[1])
+    
+    return result
 
 if __name__ == "__main__":
     # Test (debug)
@@ -122,3 +147,4 @@ if __name__ == "__main__":
     print(convert_to_deuteranopia(base_color))
     print(convert_to_tritanopia(base_color))
     print(convert_to_grey_scale(base_color))
+    print(convert_colors([base_color, base_color]))
