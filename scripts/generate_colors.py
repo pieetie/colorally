@@ -15,11 +15,9 @@ def generate_random_pair():
     """
     Generate a random pair of colors and return it as a list
     """
-    pair = []
     color1 = generate_random_color()
     color2 = generate_random_color()
-    pair.append((color1, color2))
-    return pair
+    return [color1, color2]
 
 if __name__ == "__main__":
     print(generate_random_pair())
