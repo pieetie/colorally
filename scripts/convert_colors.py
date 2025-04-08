@@ -10,6 +10,17 @@ import numpy as np
 def hex_to_rgb(hex_color):
     """
     Convert a hex color string to RGB values
+    
+    >>> hex_to_rgb('#FF0000')
+    (255, 0, 0)
+    >>> hex_to_rgb('#00FF00')
+    (0, 255, 0)
+    >>> hex_to_rgb('#0000FF')
+    (0, 0, 255)
+    >>> hex_to_rgb('#000000')
+    (0, 0, 0)
+    >>> hex_to_rgb('#FFFFFF')
+    (255, 255, 255)
     """
     hex_color = hex_color.lstrip('#')
     return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
