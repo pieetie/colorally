@@ -5,22 +5,22 @@ from scripts.generate_colors import *
 from scripts.render_colors import *
 from scripts.verify_colors import *
 
-def test1():
+def viz_pair():
     """ 
-    Test 1
+    Generate a color visualization for two colors
     """
     paire = generate_random_pair()
     print(paire)
     dic1 = convert_colors(paire)
     print(dic1)
     if verify_pairs(dic1):
-        print("Paire vérifiée")
+        print("PASS")
         final_dic = verif_colors(dic1)
         print(final_dic)
         if final_dic:
             render_colors(final_dic)
     else: 
-        print("NON")
+        print("FAIL")
 
     
 
