@@ -80,6 +80,9 @@ def convert_to_protanopia(hex_color):
     """
     Convert a hex color to simulate how it would appear to someone with protanopia
     using the Machado et al. (2009) model.
+    
+    >>> convert_to_protanopia('#eb4034')
+    '#5c5233'
     """
     rgb = normalize_rgb(hex_to_rgb(hex_color))
     
@@ -99,6 +102,9 @@ def convert_to_deuteranopia(hex_color):
     """
     Convert a hex color to simulate how it would appear to someone with deuteranopia
     using the Machado et al. (2009) model.
+    
+    >>> convert_to_deuteranopia('#eb4034')
+    '#826f32'
     """
     rgb = normalize_rgb(hex_to_rgb(hex_color))
     
@@ -120,6 +126,9 @@ def convert_to_tritanopia(hex_color):
     using the Machado et al. model
 
     TO DO : Future implementations should prioritize Brettel's matrix which is recommended specifically for tritanopia.
+    
+    >>> convert_to_tritanopia('#eb4034')
+    '#ff313d'
     """
     rgb = normalize_rgb(hex_to_rgb(hex_color))
     
@@ -138,6 +147,9 @@ def convert_to_tritanopia(hex_color):
 def convert_to_grey_scale(hex_color):
     """
     Convert a hex color to greyscale using standard luminance formula.
+    
+    >>> convert_to_grey_scale("#eb4034") 
+    '#636363'
     """
     rgb = hex_to_rgb(hex_color)
     
