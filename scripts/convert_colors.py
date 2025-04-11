@@ -28,18 +28,51 @@ def hex_to_rgb(hex_color):
 def rgb_to_hex(rgb):
     """
     Convert RGB values to a hex color string
+    
+    >>> rgb_to_hex((255, 0, 0))
+    '#ff0000'
+    >>> rgb_to_hex((0, 255, 0))
+    '#00ff00'
+    >>> rgb_to_hex((0, 0, 255))
+    '#0000ff'
+    >>> rgb_to_hex((0, 0, 0))
+    '#000000'
+    >>> rgb_to_hex((255, 255, 255))
+    '#ffffff'
     """
     return "#{:02x}{:02x}{:02x}".format(int(rgb[0]), int(rgb[1]), int(rgb[2]))
 
 def normalize_rgb(rgb):
     """
     Convert RGB values to 0-1 range
+    
+    >>> normalize_rgb((255, 0, 0))
+    (1.0, 0.0, 0.0)
+    >>> normalize_rgb((0, 255, 0))
+    (0.0, 1.0, 0.0)
+    >>> normalize_rgb((0, 0, 255))
+    (0.0, 0.0, 1.0)
+    >>> normalize_rgb((0, 0, 0))
+    (0.0, 0.0, 0.0)
+    >>> normalize_rgb((255, 255, 255))
+    (1.0, 1.0, 1.0)
     """
     return tuple(c / 255.0 for c in rgb)
 
 def denormalize_rgb(rgb):
     """
     Convert RGB values from 0-1 to 0-255 range
+    
+    >>> denormalize_rgb((1.0, 0.0, 0.0))
+    (255, 0, 0)
+    >>> denormalize_rgb((0.0, 1.0, 0.0))
+    (0, 255, 0)
+    >>> denormalize_rgb((0.0, 0.0, 1.0))
+    (0, 0, 255)
+    >>> denormalize_rgb((0.0, 0.0, 0.0))
+    (0, 0, 0)
+    >>> denormalize_rgb((1.0, 1.0, 1.0))
+    (255, 255, 255)
     """
     return tuple(min(255, max(0, c * 255)) for c in rgb)
 
