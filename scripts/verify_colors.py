@@ -1,4 +1,9 @@
-from .convert_colors import hex_to_rgb
+
+try: 
+    from convert_colors import hex_to_rgb
+except ImportError:
+    from .convert_colors import hex_to_rgb
+    
 import math
 
 def rgb_to_lab(rgb):
