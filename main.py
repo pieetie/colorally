@@ -10,11 +10,11 @@ def viz_pair():
     Generate a color visualization for two colors
     """
     paire = generate_random_pair()
-    print(paire)
+    #print(paire)
     dic1 = convert_colors(paire)
-    print(dic1)
+    #print(dic1)
     if verify_pairs(dic1):
-        print("PASS")
+        #print("PASS")
         final_dic = verif_colors(dic1)
         print(final_dic)
         if final_dic:
@@ -30,4 +30,4 @@ def main():
     pass 
 
 if __name__ == "__main__":
-    test1()
+    viz_pair()
