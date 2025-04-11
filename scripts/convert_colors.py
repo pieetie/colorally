@@ -74,7 +74,7 @@ def denormalize_rgb(rgb):
     >>> denormalize_rgb((1.0, 1.0, 1.0))
     (255, 255, 255)
     """
-    return tuple(min(255, max(0, c * 255)) for c in rgb)
+    return tuple(min(255, max(0, int(round(c * 255)))) for c in rgb)
 
 def convert_to_protanopia(hex_color):
     """
