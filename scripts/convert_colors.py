@@ -195,6 +195,18 @@ def convert_colors(pair):
     
     return result
 
+def convert_single_color(color):
+    """
+    Convert a single color to the full dictionary format with all vision types
+    """
+    color_dict = {}
+    color_dict["normal"] = color
+    color_dict["protanopia"] = convert_to_protanopia(color)
+    color_dict["deuteranopia"] = convert_to_deuteranopia(color)
+    color_dict["tritanopia"] = convert_to_tritanopia(color)
+    color_dict["grey scale"] = convert_to_grey_scale(color)
+    return color_dict
+
 if __name__ == "__main__":
     # Test (debug)
     base_color = "#eb4034"
