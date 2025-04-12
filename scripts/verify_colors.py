@@ -234,3 +234,18 @@ def verif_colors(colors_dict):
         results[key] = colors_dict[key]
     
     return results
+
+def verify_color_with_palette(color, palette):
+    """
+    Verify if a color is valid with all colors in the palette
+    """
+    for key in palette:
+        # Create a temporary pair for verification
+        temp_pair = {
+            "color1": palette[key],
+            "color2": color
+        }
+        # If any pair fails verification, return False
+        if not verify_pairs(temp_pair):
+            return False
+    return True
