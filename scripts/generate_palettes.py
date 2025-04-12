@@ -40,32 +40,3 @@ def gen_valid_pair():
         if verify_pairs(converted_pair):
             return converted_pair
 
-def make_pairs(number=1):
-    """ 
-    This function use gen_valid_pair to generate X pairs
-    Return a big dictionnary that contains all the dictionnary of pairs 
-    """
-    result = {}
-    
-    for i in range(number):
-        # Generate a valid pair
-        pair = gen_valid_pair()
-        
-        # Add the pair to the result dictionary with a unique key
-        pair_key = f"pair_{i+1}"
-        result[pair_key] = pair
-    
-    return result
-
-if __name__ == "__main__":
-    # Test the functions
-    pair = gen_valid_pair()
-    print(pair)
-    
-    print("\nGenerating 3 pairs")
-    pairs = make_pairs(3)
-    print(pairs)
-    for key, value in pairs.items():
-        print(f"{key}:")
-        print(f"  Color 1: {value['color1']['normal']}")
-        print(f"  Color 2: {value['color2']['normal']}")
