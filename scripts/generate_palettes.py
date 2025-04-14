@@ -43,47 +43,64 @@ def gen_valid_pair():
         if verify_pairs(converted_pair):
             return converted_pair
 
-def generate_palette(size=3):
+def generate_palette(size=3, max_failures=1000):
     """
     Generate a palette of n colors that all pass the verification tests with each other
     """
     if size < 2:
         raise ValueError("Palette size must be at least 2")
     
-    # Generate the first valid pair
-    initial_pair = gen_valid_pair()
+    total_failures = 0
+    current_failures = 0
+    restart_count = 0
     
-    # Initialize palette
-    palette = {
-        "color1": initial_pair["color1"],
-        "color2": initial_pair["color2"]
-    }
-    
-    # Track failed colors to avoid regenerating them
-    failed_colors = set()
-    fail_counter = 0
-    
-    # Add remaining colors
-    while len(palette) < size:
-        # Generate a new random color that hasn't failed befor
-        while True: 
-            new_color_hex = generate_random_color()
-            if new_color_hex not in failed_colors:
-                break
+    while True:
+        # Generate the first valid pair
+        initial_pair = gen_valid_pair()
         
-        # Convert to our format
-        new_color = convert_single_color(new_color_hex)
+        # Initialize palette
+        palette = {
+            "color1": initial_pair["color1"],
+            "color2": initial_pair["color2"]
+        }
         
-        # Check if this color works with all existing colors in the palette
-        if verify_color_with_palette(new_color, palette):
-            # Add to palette
-            palette[f"color{len(palette)+1}"] = new_color
-        else:
-            # Add to failed colors
-            failed_colors.add(new_color_hex)
-            fail_counter += 1
+        # Track failed colors to avoid regenerating them
+        failed_colors = set()
+        current_failures = 0
+        
+        # Add remaining colors
+        while len(palette) < size:
+            # Check if we've had too many failures and need to restart
+            if current_failures >= max_failures:
+                print(f"Too many failures ({current_failures}). Restarting with a new color pair...")
+                total_failures += current_failures
+                restart_count += 1
+                break  # Break the inner loop to restart with a new pair
+                
+            # Generate a new random color that hasn't failed before
+            while True:
+                new_color_hex = generate_random_color()
+                if new_color_hex not in failed_colors:
+                    break
             
-    return palette, fail_counter
+            # Convert to our format
+            new_color = convert_single_color(new_color_hex)
+            
+            # Check if this color works with all existing colors in the palette
+            if verify_color_with_palette(new_color, palette):
+                # Add to palette
+                palette[f"color{len(palette)+1}"] = new_color
+            else:
+                # Add to failed colors
+                failed_colors.add(new_color_hex)
+                current_failures += 1
+        
+        # If we've successfully created a palette of the requested size, we're done
+        if len(palette) == size:
+            total_failures += current_failures
+            if restart_count > 0:
+                print(f"Successfully generated a palette after {restart_count} restarts")
+            return palette, total_failures
 
 def generate_palettes(num_palettes=3, palette_size=5):
     """
