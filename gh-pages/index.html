@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorally</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Colorally</h1>
+    </header>
+    
+    <div class="container">
+        <div class="controls">
+            <a href="#" class="button number-selector" id="color-selector">Number of colors : ?</a>
+            <a href="#" class="button random-button" id="random-palette">Random palette</a>
+        </div>
+        
+        <div class="palette-display">
+            <div class="vision-type">
+                <h3>Normal</h3>
+                <div class="color-wheel" id="normal-wheel"></div>
+            </div>
+            <div class="vision-type">
+                <h3>Protanopia</h3>
+                <div class="color-wheel" id="protanopia-wheel"></div>
+            </div>
+            <div class="vision-type">
+                <h3>Deuteranopia</h3>
+                <div class="color-wheel" id="deuteranopia-wheel"></div>
+            </div>
+            <div class="vision-type">
+                <h3>Tritanopia</h3>
+                <div class="color-wheel" id="tritanopia-wheel"></div>
+            </div>
+            <div class="vision-type">
+                <h3>Grey scale</h3>
+                <div class="color-wheel" id="grey-scale-wheel"></div>
+            </div>
+        </div>
+        
+        <div>
+            <span class="hex-display" id="hex-codes">HEX, HEX, HEX, HEX, HEX, HEX, HEX</span>
+            <a href="#" class="button copy-button" id="copy-button">COPY</a>
+        </div>
+        
+        <!-- Error message (hidden by default) -->
+        <div id="error-message" class="error-message" style="display: none;">
+            <p>An error occurred while loading the palettes. Please refresh the page or try again later.</p>
+        </div>
+        
+        <!-- Info message for 8-color palettes -->
+        <div id="wip-message" class="info-message">
+            <p>8-color palettes are still a work in progress. More palettes coming soon!</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 

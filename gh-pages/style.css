@@ -1,0 +1,202 @@
+/* Import fonts */
+@import url('https://fonts.cdnfonts.com/css/open-sauce-one');
+
+/* General styles */
+body {
+    font-family: 'Open Sauce One', 'Open Sauce Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #333;
+}
+
+header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 40px 0;
+}
+
+h1 {
+    font-family: 'Open Sauce One', 'Open Sauce Sans', sans-serif;
+    font-size: 5rem;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+/* Control buttons */
+.controls {
+    margin: 30px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #000;
+    font-weight: bold;
+    font-size: 1.2em;
+    transition: all 0.3s ease;
+}
+
+.number-selector {
+    background-color: white;
+    color: black;
+    min-width: 240px;
+}
+
+.random-button {
+    background-color: black;
+    color: white;
+    min-width: 240px;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.button.disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    border-color: #999999;
+}
+
+.button.disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Palette display */
+.palette-display {
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0;
+}
+
+.vision-type {
+    text-align: center;
+    width: 18%;
+}
+
+.vision-type h3 {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.color-wheel {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* HEX display and copy button */
+.hex-display {
+    margin-top: 40px;
+    padding: 20px 40px;
+    border: 2px solid #000;
+    display: inline-block;
+    min-width: 60%;
+    font-weight: bold;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+
+.copy-button {
+    background-color: black;
+    color: white;
+    margin-left: 15px;
+    padding: 20px 50px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Messages */
+.error-message {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffdddd;
+    border: 1px solid #ff0000;
+    color: #990000;
+    border-radius: 5px;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-message {
+    margin-top: 8px;
+    padding: 8px 15px;
+    background-color: #e6f7ff;
+    border: 1px solid #1890ff;
+    color: #0050b3;
+    border-radius: 0;
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    display: none;
+    font-size: 0.9em;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.info-message p {
+    margin: 0;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .palette-display {
+        flex-wrap: wrap;
+    }
+    
+    .vision-type {
+        width: 45%;
+        margin-bottom: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    .vision-type {
+        width: 100%;
+    }
+    
+    .controls {
+        flex-direction: column;
+    }
+    
+    h1 {
+        font-size: 3rem;
+    }
+    
+    .hex-display, .copy-button {
+        width: 100%;
+        margin: 10px 0;
+        box-sizing: border-box;
+    }
+} 
