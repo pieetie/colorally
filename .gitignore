@@ -1,5 +1,6 @@
 PLAN.md
 outputs/color_visualization.png
+convert_palette.py
 
 __pycache__/
 .DS_Store
