@@ -1,6 +1,6 @@
 # Colorally
 
-![colorally-preview](https://github.com/user-attachments/assets/4d50f778-93c0-4e10-ab66-36fe3f57c5b1)
+![colorally-preview-2](https://github.com/user-attachments/assets/d33e069a-6cec-42a6-8c95-9fd59f59943b)
 
 ## Abstract
 Colorally is a tool that generates accessible color palettes distinguishable across normal vision, various types of color blindness (protanopia, deuteranopia, tritanopia) and grey scale applications such as printing.  
