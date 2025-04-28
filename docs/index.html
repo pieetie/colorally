@@ -13,8 +13,8 @@
     
     <div class="container">
         <div class="controls">
-            <a href="#" class="button number-selector" id="color-selector">Number of colors : ?</a>
-            <a href="#" class="button random-button" id="random-palette">Random palette</a>
+            <button class="button number-selector" id="color-selector">Number of colors : ?</button>
+            <button class="button random-button" id="random-palette">Random palette</button>
         </div>
         
         <div class="palette-display">
@@ -42,7 +42,7 @@
         
         <div>
             <span class="hex-display" id="hex-codes">HEX, HEX, HEX, HEX, HEX, HEX, HEX</span>
-            <a href="#" class="button copy-button" id="copy-button">COPY</a>
+            <button class="button copy-button" id="copy-button">COPY</button>
         </div>
         
         <!-- Error message (hidden by default) -->
@@ -50,9 +50,9 @@
             <p>An error occurred while loading the palettes. Please refresh the page or try again later.</p>
         </div>
         
-        <!-- Info message for 8-color palettes -->
+        <!-- Info message for limited palettes -->
         <div id="wip-message" class="info-message">
-            <p>8-color palettes are still a work in progress. More palettes coming soon!</p>
+            <p>Palettes for this number of colors are limited. More palettes coming soon!</p>
         </div>
     </div>
 

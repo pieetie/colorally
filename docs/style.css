@@ -50,6 +50,9 @@ h1 {
     font-weight: bold;
     font-size: 1.2em;
     transition: all 0.3s ease;
+    font-family: 'Open Sauce One', 'Open Sauce Sans', sans-serif;
+    background: none;
+    text-align: center;
 }
 
 .number-selector {
