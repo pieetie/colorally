@@ -7,10 +7,10 @@ import csv
 
 try:
     from convert_colors import convert_colors
-    from verify_colors import verify_pairs
+    from verify_colors import verify_pairs, DELTA_E_THRESHOLDS
 except ImportError:
     from .convert_colors import convert_colors
-    from .verify_colors import verify_pairs
+    from .verify_colors import verify_pairs, DELTA_E_THRESHOLDS
 
 def is_compatible_with_palette(new_color_hex, palette_colors):
     """
@@ -48,13 +48,15 @@ def determine_max_palette():
     from #000000 to #FFFFFF in linear order
     
     Returns:
-        List of HEX colors in the palette
+        List of HEX colors in the palette, dictionary with color discovery timestamps
     """
     start_time = time.time()
     palette = []
+    color_timestamps = {}
     
     first_color = '#000000'
     palette.append(first_color)
+    color_timestamps[first_color] = 0  # First color at time 0
     print(f"Starting palette with color: {first_color}")
     
     total_colors = 16777216 #256x256x256
@@ -74,7 +76,10 @@ def determine_max_palette():
             # Check if this color is compatible with the existing palette
             if is_compatible_with_palette(color_hex, palette):
                 palette.append(color_hex)
-                print(f"Added color {color_hex} - Current palette: {len(palette)} colors")
+                # Record the time this color was found (seconds since start)
+                elapsed_time = time.time() - start_time
+                color_timestamps[color_hex] = elapsed_time
+                print(f"Added color {color_hex} at {elapsed_time:.2f}s - Current palette: {len(palette)} colors")
             
             # Update progress bar
             pbar.update(1)
@@ -85,15 +90,15 @@ def determine_max_palette():
                 pbar.set_description(f"Checked {colors_checked:,} colors, found {len(palette)} compatible")
     
     end_time = time.time()
-    duration = end_time - start_time
+    total_duration = end_time - start_time
     
-    print(f"\nComplete palette determined in {duration:.2f} seconds")
+    print(f"\nComplete palette determined in {total_duration:.2f} seconds")
     print(f"Total colors checked: {colors_checked:,}")
     print(f"Number of colors in palette: {len(palette)}")
     
-    return palette
+    return palette, color_timestamps, total_duration
 
-def save_palette_data(palette):
+def save_palette_data(palette, color_timestamps, total_duration):
     """
     Save palette data to a CSV file in the data/ directory
     """
@@ -101,10 +106,17 @@ def save_palette_data(palette):
     file_exists = os.path.isfile(filename)
     
     current_time = time.strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Format Delta E thresholds as string
+    delta_e_str = "|".join([f"{vision_type}:{threshold}" for vision_type, threshold in DELTA_E_THRESHOLDS.items()])
+    
     data = {
         "timestamp": current_time,
         "palette_size": len(palette),
-        "colors": "|".join(palette)
+        "colors": "|".join(palette),
+        "color_timestamps": "|".join([f"{color}:{time:.2f}" for color, time in color_timestamps.items()]),
+        "total_duration": f"{total_duration:.2f}",
+        "delta_e_thresholds": delta_e_str  # Add Delta E thresholds used
     }
     
     # Create directory if it doesn't exist
@@ -133,12 +145,35 @@ def save_palette_colors(palette):
     
     print(f"Palette colors saved to {filename}")
 
+def save_color_timestamps(color_timestamps, total_duration):
+    """
+    Save color discovery timestamps to a separate CSV file for analysis
+    """
+    filename = "data/color_timestamps.csv"
+    
+    # Format Delta E thresholds as string
+    delta_e_str = "|".join([f"{vision_type}:{threshold}" for vision_type, threshold in DELTA_E_THRESHOLDS.items()])
+    
+    # Create directory if it doesn't exist
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    
+    with open(filename, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["color", "discovery_time", "total_duration", "delta_e_thresholds"])
+        
+        # Write each color and its timestamp
+        for color, timestamp in color_timestamps.items():
+            writer.writerow([color, f"{timestamp:.2f}", f"{total_duration:.2f}", delta_e_str])
+    
+    print(f"Color timestamps saved to {filename}")
+
 if __name__ == "__main__":
-    palette = determine_max_palette()
+    palette, color_timestamps, total_duration = determine_max_palette()
     
     if palette:
-        save_palette_data(palette)
+        save_palette_data(palette, color_timestamps, total_duration)
         save_palette_colors(palette)
+        save_color_timestamps(color_timestamps, total_duration)
     else:
         print("error")
 
