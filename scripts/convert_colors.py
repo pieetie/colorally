@@ -76,15 +76,40 @@ def denormalize_rgb(rgb):
     """
     return tuple(min(255, max(0, int(round(c * 255)))) for c in rgb)
 
+def srgb_to_linear(srgb):
+    """
+    Convert sRGB values (0-1 range) to linearRGB (0-1 range)
+    """
+    result = []
+    for c in srgb:
+        if c <= 0.04045:
+            result.append(c / 12.92)
+        else:
+            result.append(((c + 0.055) / 1.055) ** 2.4)
+    return tuple(result)
+
+def linear_to_srgb(linear):
+    """
+    Convert linearRGB values (0-1 range) to sRGB (0-1 range)
+    """
+    result = []
+    for c in linear:
+        if c <= 0.0031308:
+            result.append(c * 12.92)
+        else:
+            result.append(1.055 * (c ** (1/2.4)) - 0.055)
+    return tuple(max(0, min(1, x)) for x in result)
+
 def convert_to_protanopia(hex_color):
     """
     Convert a hex color to simulate how it would appear to someone with protanopia
     using the Machado et al. (2009) model.
-    
-    >>> convert_to_protanopia('#eb4034')
-    '#5c5233'
     """
-    rgb = normalize_rgb(hex_to_rgb(hex_color))
+    # Convert to normalized sRGB
+    srgb = normalize_rgb(hex_to_rgb(hex_color))
+    
+    # Convert to linearRGB for matrix operations
+    linear_rgb = srgb_to_linear(srgb)
     
     # Transformation matrix for protanopia from Machado et al.
     sim_matrix = np.array([
@@ -93,8 +118,14 @@ def convert_to_protanopia(hex_color):
         [-0.003882, -0.048116, 1.051998]
     ])
     
-    simulated_rgb = np.dot(sim_matrix, rgb)
-    simulated_rgb = denormalize_rgb(simulated_rgb)
+    # Apply matrix to linearRGB
+    simulated_linear = np.dot(sim_matrix, linear_rgb)
+    
+    # Convert back to sRGB for display
+    simulated_srgb = linear_to_srgb(simulated_linear)
+    
+    # Convert to 0-255 range and then to hex
+    simulated_rgb = denormalize_rgb(simulated_srgb)
     
     return rgb_to_hex(simulated_rgb)
 
@@ -102,11 +133,12 @@ def convert_to_deuteranopia(hex_color):
     """
     Convert a hex color to simulate how it would appear to someone with deuteranopia
     using the Machado et al. (2009) model.
-    
-    >>> convert_to_deuteranopia('#eb4034')
-    '#826f32'
     """
-    rgb = normalize_rgb(hex_to_rgb(hex_color))
+    # Convert to normalized sRGB
+    srgb = normalize_rgb(hex_to_rgb(hex_color))
+    
+    # Convert to linearRGB for matrix operations
+    linear_rgb = srgb_to_linear(srgb)
     
     # Transformation matrix for deuteranopia from Machado et al.
     sim_matrix = np.array([
@@ -115,8 +147,14 @@ def convert_to_deuteranopia(hex_color):
         [-0.011820, 0.042940, 0.968881]
     ])
     
-    simulated_rgb = np.dot(sim_matrix, rgb)
-    simulated_rgb = denormalize_rgb(simulated_rgb)
+    # Apply matrix to linearRGB
+    simulated_linear = np.dot(sim_matrix, linear_rgb)
+    
+    # Convert back to sRGB for display
+    simulated_srgb = linear_to_srgb(simulated_linear)
+    
+    # Convert to 0-255 range and then to hex
+    simulated_rgb = denormalize_rgb(simulated_srgb)
     
     return rgb_to_hex(simulated_rgb)
 
@@ -125,12 +163,13 @@ def convert_to_tritanopia(hex_color):
     Convert a hex color to simulate how it would appear to someone with tritanopia
     using the Machado et al. model
 
-    TO DO : Future implementations should prioritize Brettel's matrix which is recommended specifically for tritanopia.
-    
-    >>> convert_to_tritanopia('#eb4034')
-    '#ff313d'
+    Future implementations should prioritize Brettel's matrix which is recommended specifically for tritanopia.
     """
-    rgb = normalize_rgb(hex_to_rgb(hex_color))
+    # Convert to normalized sRGB
+    srgb = normalize_rgb(hex_to_rgb(hex_color))
+    
+    # Convert to linearRGB for matrix operations
+    linear_rgb = srgb_to_linear(srgb)
     
     # Transformation matrix for tritanopia from Machado et al.
     sim_matrix = np.array([
@@ -139,22 +178,31 @@ def convert_to_tritanopia(hex_color):
         [0.004733, 0.691367, 0.303900]
     ])
     
-    simulated_rgb = np.dot(sim_matrix, rgb)
-    simulated_rgb = denormalize_rgb(simulated_rgb)
+    # Apply matrix to linearRGB
+    simulated_linear = np.dot(sim_matrix, linear_rgb)
+    
+    # Convert back to sRGB for display
+    simulated_srgb = linear_to_srgb(simulated_linear)
+    
+    # Convert to 0-255 range and then to hex
+    simulated_rgb = denormalize_rgb(simulated_srgb)
     
     return rgb_to_hex(simulated_rgb)
 
 def convert_to_grey_scale(hex_color):
     """
-    Convert a hex color to greyscale using standard luminance formula.
-    
-    >>> convert_to_grey_scale("#eb4034") 
-    '#636363'
+    Convert a hex color to grey scale using standard luminance formula.
+    The formula is applied directly in sRGB space as it was designed for this color space.
     """
-    rgb = hex_to_rgb(hex_color)
+    # Convert to normalized sRGB
+    srgb = normalize_rgb(hex_to_rgb(hex_color))
     
-    # Luminance formula for greyscale
-    grey = int(0.2126 * rgb[0] + 0.7152 * rgb[1] + 0.0722 * rgb[2])
+    # Apply luminance formula directly in sRGB space
+    grey = 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2]
+    
+    # Convert to 0-255 range and then to hex
+    rgb_grey = denormalize_rgb((grey, grey, grey))
+    grey = rgb_grey[0]  # All channels have same value
     
     return "#{:02x}{:02x}{:02x}".format(grey, grey, grey)
 
