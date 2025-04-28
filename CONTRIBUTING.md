@@ -1,6 +1,4 @@
 # Contributing
-
-Thank you for considering contributing to Colorally !  
 This document provides guidelines for contributing to the project.
 
 ## What Should I Know Before I Get Started?
