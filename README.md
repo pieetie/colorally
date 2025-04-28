@@ -1,6 +1,14 @@
-# Colorally
+<p align="center">
+  <a href="https://pieetie.github.io/colorally/">
+    <img src="docs/assets/logo/logo_colorally_w.png" alt="Logo" width="200" />
+  </a>
+</p>
 
-<img src="docs/assets/logo/logo_colorally_w.png" alt="Logo" width="300" />
+<p align="center">
+  <a href="https://pieetie.github.io/colorally/"><img src="https://img.shields.io/badge/Try%20Colorally-Live%20Demo-brightgreen" alt="Live Demo"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue" alt="License"></a>
+  <a href="https://github.com/pieetie/colorally"><img src="https://img.shields.io/badge/GitHub-Repository-lightgrey" alt="GitHub"></a>
+</p>
 
 ## Abstract
 Colorally is a tool that generates accessible color palettes distinguishable across normal vision, various types of color blindness (protanopia, deuteranopia, tritanopia) and grey scale applications such as printing.  
