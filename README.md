@@ -1,5 +1,7 @@
 # Colorally
 
+<img src="docs/assets/logo/logo_colorally_w.png" alt="Logo" width="300" />
+
 ## Abstract
 Colorally is a tool that generates accessible color palettes distinguishable across normal vision, various types of color blindness (protanopia, deuteranopia, tritanopia) and grey scale applications such as printing.  
 Based on reviews by [Nicolas Burrus](https://github.com/nburrus) and the work of Gustavo M. Machado, Manuel M. Oliveira and Leandro A. F. Fernandes, Colorally uses vision simulation matrices to convert colors and assess their perceptual differences.  
@@ -22,3 +24,6 @@ A different algorithmic approach would be needed to determine the theoretical ma
 - [Understanding LMS-based Color Blindness Simulations (Nicolas Burrus)](https://daltonlens.org/understanding-cvd-simulation/)
 - [A Physiologically-based Model for Simulation of Color Vision Deficiency (Machado et al.)](https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html#Results)
 - [Delta E (CIE 2000) formula (Bruce Lindbloom)](http://www.brucelindbloom.com/index.html?Eqn_DeltaE_CIE2000.html)
+
+## Credits
+- Logo and favicons were created by [Elisa PERRIN](https://www.linkedin.com/in/elisa-perrin-092082226/)
