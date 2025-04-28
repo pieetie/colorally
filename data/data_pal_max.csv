@@ -1,2 +1,2 @@
-timestamp,palette_size,colors
-2025-04-17 17:12:04,8,#000000|#0020fb|#0052b9|#0074fa|#009cd6|#00c2fd|#00fe9e|#a6fffe
+timestamp,palette_size,colors,color_timestamps,total_duration,delta_e_thresholds
+2025-04-28 00:15:56,5,#000000|#0036f8|#007afb|#00b8a5|#00f8fc,#000000:0.00|#0036f8:0.84|#007afb:2.79|#00b8a5:5.63|#00f8fc:9.80,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0

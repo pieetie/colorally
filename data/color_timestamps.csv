@@ -1,0 +1,6 @@
+color,discovery_time,total_duration,delta_e_thresholds
+#000000,0.00,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0
+#0036f8,0.84,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0
+#007afb,2.79,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0
+#00b8a5,5.63,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0
+#00f8fc,9.80,3146.78,normal:10.0|protanopia:15.0|deuteranopia:15.0|tritanopia:15.0|grey scale:15.0
