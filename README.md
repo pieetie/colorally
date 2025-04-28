@@ -19,6 +19,10 @@ Colorally uses specific Delta E thresholds (ΔE ≥ 10 for normal vision, ΔE �
 An additional greedy algorithm exploration found a maximum of 5 colors under these constraints.
 A different algorithmic approach would be needed to determine the theoretical maximum palette size with these settings.
 
+## Preview
+
+![colorallyGIF](https://github.com/user-attachments/assets/bb013921-5e1a-4c8e-a2de-fc665ff69033)
+
 ## Documentation
 
 - [Try Colorally](https://pieetie.github.io/colorally/)
