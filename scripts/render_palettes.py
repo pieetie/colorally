@@ -68,5 +68,5 @@ def render_palette_to_image(hex_colors, chart_type="donut", show_title=False):
     return filename
 
 if __name__ == "__main__":
-    example_colors = ["#d1603f","#92d4b9","#170256","#4d226b","#b03873","#b5898d","#fcf5b0"]
+    example_colors = ["#000000","#0036f8","#007afb","#00b8a5","#00f8fc"]
     render_palette_to_image(example_colors, chart_type="donut", show_title=False)
