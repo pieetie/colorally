@@ -8,7 +8,8 @@ import statistics
 from scripts.convert_colors import *
 from scripts.generate_colors import *
 from scripts.render_colors import *
-from scripts.verify_colors import *
+from scripts.verify_colors import * 
+from scripts.verify_colors import DELTA_E_THRESHOLDS
 from scripts.generate_palettes import *
 
 def viz_pair():
@@ -31,12 +32,17 @@ def save_palette_data(palette, palette_size, generation_time, failures):
     colors = [value["normal"] for value in palette.values()]
     colors_str = "|".join(colors)
     
+    # Get Delta E thresholds from verify_colors
+    delta_e_str = "|".join([f"{vision_type}:{threshold}" for vision_type, threshold in DELTA_E_THRESHOLDS.items()])
+    #print(delta_e_str)
+    
     data = {
         "timestamp": current_time,
         "palette_size": palette_size,
         "colors": colors_str,
         "generation_time": generation_time,
-        "failures": failures
+        "failures": failures,
+        "delta_e_thresholds": delta_e_str
     }
     
     # Write in the csv
@@ -145,7 +151,7 @@ def main():
     """
     Main function that generates and saves palettes
     """
-    generate_and_save_palettes(palette_size=7, num_palettes=100, max_failures=5000)
+    generate_and_save_palettes(palette_size=2, num_palettes=100, max_failures=5000)
 
 if __name__ == "__main__":
     main()
