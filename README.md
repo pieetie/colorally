@@ -2,7 +2,8 @@
 
 ## Abstract
 Colorally is a tool that generates accessible color palettes distinguishable across normal vision, various types of color blindness (protanopia, deuteranopia, tritanopia) and grey scale applications such as printing.  
-Based on reviews by [Nicolas Burrus](https://github.com/nburrus) and the work of Gustavo M. Machado, Manuel M. Oliveira and Leandro A. F. Fernandes, Colorally uses vision simulation matrices to convert colors and assess their perceptual differences. The core algorithm employs the CIEDE2000 color difference formula to ensure minimum perceptual distance between colors.  
+Based on reviews by [Nicolas Burrus](https://github.com/nburrus) and the work of Gustavo M. Machado, Manuel M. Oliveira and Leandro A. F. Fernandes, Colorally uses vision simulation matrices to convert colors and assess their perceptual differences.  
+The core algorithm employs the CIEDE2000 color difference formula to ensure minimum perceptual distance between colors.  
 The main purpose is to provide color palettes that remain distinguishable across all vision types and maintain their distinctiveness when printed.
 The tool generates palettes containing 2 to 5 colors through a structured pipeline.
 Colorally uses specific Delta E thresholds (ΔE ≥ 10 for normal vision, ΔE ≥ 15 for color blindness and grey scale) that ensure good distinguishability. The default values provide optimal results for scientific visualization but it is also possible to generate custom palettes with customized parameters. 
