@@ -1,4 +1,3 @@
-
 try: 
     from convert_colors import hex_to_rgb
 except ImportError:
@@ -6,16 +5,33 @@ except ImportError:
     
 import math
 
+# Delta E thresholds for different vision types
+NORMAL_DELTA_E_THRESHOLD = 10.0
+PROTANOPIA_DELTA_E_THRESHOLD = 15.0
+DEUTERANOPIA_DELTA_E_THRESHOLD = 15.0
+TRITANOPIA_DELTA_E_THRESHOLD = 15.0
+GREY_SCALE_DELTA_E_THRESHOLD = 15.0 
+
+# Dictionary mapping vision types to their respective thresholds for easy reference
+DELTA_E_THRESHOLDS = {
+    "normal": NORMAL_DELTA_E_THRESHOLD,
+    "protanopia": PROTANOPIA_DELTA_E_THRESHOLD, 
+    "deuteranopia": DEUTERANOPIA_DELTA_E_THRESHOLD,
+    "tritanopia": TRITANOPIA_DELTA_E_THRESHOLD,
+    "grey scale": GREY_SCALE_DELTA_E_THRESHOLD
+}
+
 def rgb_to_lab(rgb):
     """
-    Convert RGB values to Lab color space
+    Convert RGB values to Lab color space via linear RGB and XYZ
+    Workflow: sRGB → Linear RGB → XYZ → Lab
     sources : 
     https://www.w3.org/Graphics/Color/sRGB
     http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html
     """
     r, g, b = [c/255.0 for c in rgb]
     
-    # Convert to sRGB
+    # Convert sRGB to Linear RGB
     r = r/12.92 if r <= 0.04045 else ((r+0.055)/1.055)**2.4
     g = g/12.92 if g <= 0.04045 else ((g+0.055)/1.055)**2.4
     b = b/12.92 if b <= 0.04045 else ((b+0.055)/1.055)**2.4
@@ -135,7 +151,7 @@ def calculate_delta_e(color1, color2):
     rgb1 = hex_to_rgb(color1)
     rgb2 = hex_to_rgb(color2)
     
-    # Convert RGB to Lab
+    # Convert RGB to Lab through linear RGB and XYZ
     lab1 = rgb_to_lab(rgb1)
     lab2 = rgb_to_lab(rgb2)
     
@@ -148,7 +164,9 @@ def verify_pairs(colors_dict):
     """ 
     This function will verify if a pair of color pass the test
     for normal, protanopia, deuteranopia, tritanopia and grey scale
-    Exemple :
+    Each vision type uses its own Delta E threshold from the global settings.
+    
+    Example input:
     {'color1': 
         {'normal': '#cbf56d', 
         'protanopia': '#ffe266', 
@@ -163,9 +181,6 @@ def verify_pairs(colors_dict):
         'tritanopia': '#76cbb6', 
         'grey scale': '#b9b9b9'}}
     """
-    # I set MIN_DELTA_E to 10.0 to ensure distinct color perception
-    MIN_DELTA_E = 10.0
-    
     results = {}
     
     # Check difference for each vision type
@@ -175,7 +190,10 @@ def verify_pairs(colors_dict):
         color1 = colors_dict["color1"][vision]
         color2 = colors_dict["color2"][vision]
         delta_e = calculate_delta_e(color1, color2)
-        results[vision] = delta_e >= MIN_DELTA_E
+        
+        # Use the specific threshold for this vision type
+        threshold = DELTA_E_THRESHOLDS[vision]
+        results[vision] = delta_e >= threshold
     
     # Return True only if all vision types have sufficient difference
     return all(results.values())
