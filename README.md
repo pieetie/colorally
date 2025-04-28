@@ -7,7 +7,6 @@
 <p align="center">
   <a href="https://pieetie.github.io/colorally/"><img src="https://img.shields.io/badge/Try%20Colorally-Live%20Demo-brightgreen" alt="Live Demo"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-GPL--3.0-blue" alt="License"></a>
-  <a href="https://github.com/pieetie/colorally"><img src="https://img.shields.io/badge/GitHub-Repository-lightgrey" alt="GitHub"></a>
 </p>
 
 ## Abstract
