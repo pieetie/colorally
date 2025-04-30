@@ -142,10 +142,32 @@ def calculate_delta_e_2000(lab1, lab2):
     
     return delta_E
 
+
 def calculate_delta_e(color1, color2):
     """
-    Calculate Delta E (ΔE) between two colors
-    Source: https://en.wikipedia.org/wiki/Color_difference
+    Calculates the Delta E color difference between two hexadecimal colors.
+
+    This function computes how perceptually different two colors are using
+    the CIEDE2000 formula. The input colors are expected in hexadecimal format
+    and are internally converted to LAB color space.
+
+    Args:
+        color1 (str): First color in hexadecimal format (e.g., "#FF0000").
+        color2 (str): Second color in hexadecimal format (e.g., "#00FF00").
+
+    Returns:
+        float: The Delta E (ΔE) value representing the perceptual difference
+               between the two colors. A value of 0.0 means the colors are identical.
+
+    Examples:
+        >>> calculate_delta_e("#FF0000", "#FF0000")
+        0.0
+
+        >>> round(calculate_delta_e("#FF0000", "#00FF00"), 2)
+        86.62
+
+        >>> round(calculate_delta_e("#FF0000", "#0000FF"), 2)
+        52.88
     """
     # Convert HEX colors to RGB
     rgb1 = hex_to_rgb(color1)
@@ -159,6 +181,7 @@ def calculate_delta_e(color1, color2):
     # by correcting non-uniformities in the Lab color space
     delta_e = calculate_delta_e_2000(lab1, lab2)
     return delta_e
+
 
 def verify_pairs(colors_dict):
     """ 
