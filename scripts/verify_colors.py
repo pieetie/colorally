@@ -21,13 +21,33 @@ DELTA_E_THRESHOLDS = {
     "grey scale": GREY_SCALE_DELTA_E_THRESHOLD
 }
 
+
 def rgb_to_lab(rgb):
     """
-    Convert RGB values to Lab color space via linear RGB and XYZ
-    Workflow: sRGB → Linear RGB → XYZ → Lab
-    sources : 
-    https://www.w3.org/Graphics/Color/sRGB
-    http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html
+    Converts an sRGB color to CIELAB color space via linear
+    RGB and XYZ conversions.
+
+    This function performs the following steps:
+    sRGB (0–255) → Linear RGB → XYZ → CIELAB. It assumes input is in the sRGB
+    color space and outputs values in the LAB color space.
+
+    Args:
+        rgb (tuple[int, int, int]): RGB color as a tuple of integers
+            in the range 0–255.
+
+    Returns:
+        list[float]: A list of three floats representing
+            the corresponding CIELAB color [L, a, b].
+
+    Examples:
+        >>> [round(x, 2) for x in rgb_to_lab((255, 0, 0))]
+        [53.23, 80.11, 67.22]
+
+        >>> [round(x, 2) for x in rgb_to_lab((0, 255, 0))]
+        [87.74, -86.18, 83.18]
+
+        >>> [round(x, 2) for x in rgb_to_lab((0, 0, 255))]
+        [32.3, 79.2, -107.86]
     """
     r, g, b = [c/255.0 for c in rgb]
     
@@ -60,20 +80,50 @@ def rgb_to_lab(rgb):
     
     return [L, a, b]
 
+
 def degrees_to_radians(degrees):
     return degrees * (math.pi / 180)
+
 
 def radians_to_degrees(radians):
     return radians * (180 / math.pi)
 
+
 def calculate_delta_e_2000(lab1, lab2):
     """
-    Calculate Delta E using the CIEDE2000 algorithm
+    Calculates the Delta E (CIEDE2000) color difference between two LAB colors.
+
+    This function implements the official CIEDE2000 formula for computing
+    perceptual color difference between two colors in the CIELAB color space.
+    It accounts for differences in lightness, chroma, and hue to reflect
+    human perception more accurately than older formulas like CIE76 or CIE94.
+
     Source: http://www.brucelindbloom.com/index.html?Eqn_DeltaE_CIE2000.html
+
+    Args:
+        lab1 (list[float]): First color in LAB format [L, a, b].
+        lab2 (list[float]): Second color in LAB format [L, a, b].
+
+    Returns:
+        float: The Delta E value representing the perceptual difference
+            between the two colors. A value of 0.0 means the colors are identical.
+
+    Examples:
+        >>> round(calculate_delta_e_2000(
+        ...     [50.0, 2.6772, -79.7751],
+        ...     [50.0, 0.0, -82.7485]
+        ... ), 4)
+        1.8693
+
+        >>> round(calculate_delta_e_2000(
+        ...     [50.0, 3.1571, -77.2803],
+        ...     [50.0, 0.0, -82.7485]
+        ... ), 4)
+        2.5797
     """
     L1, a1, b1 = lab1
     L2, a2, b2 = lab2
-    
+
     C1 = math.sqrt(a1**2 + b1**2)
     C2 = math.sqrt(a2**2 + b2**2)
     C_mean = (C1 + C2) / 2
