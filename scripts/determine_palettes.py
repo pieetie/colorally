@@ -16,23 +16,18 @@ except ImportError:
 def is_compatible_with_palette(new_color_hex, palette_colors):
     """
     Check if a new color is compatible with all colors in the existing palette.
-
-    This function verifies that a new color meets the Delta E threshold requirements
-    when compared with all colors in the existing palette. It uses the CIEDE2000
-    color difference formula to ensure perceptual distinction across different
-    vision types (normal, protanopia, deuteranopia, tritanopia, and grey scale).
-
+    
     Args:
-        new_color_hex (str): The new color to check in hexadecimal format (e.g., "#FF0000").
-        palette_colors (list[str]): List of existing colors in the palette in hexadecimal format.
-
+        new_color_hex (str): Hexadecimal color (e.g., "#FF0000").
+        palette_colors (list[str]): List of existing palette colors.
+    
     Returns:
-        bool: True if the new color is compatible with all colors in the palette,
-              False if it fails any compatibility check.
-
+        bool: True if compatible, False otherwise.
+        
     Examples:
-        >>> is_compatible_with_palette("#000000", ["#FFFFFF"])  # Black and white are very different
+        >>> is_compatible_with_palette("#000000", ["#FFFFFF"])
         True
+    
     """
     if not palette_colors:
         return True
@@ -49,20 +44,16 @@ def is_compatible_with_palette(new_color_hex, palette_colors):
 def hex_to_int(hex_color):
     """
     Convert a hexadecimal color string to its integer representation.
-
-    This function removes the '#' prefix if present and converts the
-    hexadecimal color code to its decimal integer equivalent.
-
+    
     Args:
-        hex_color (str): Color in hexadecimal format (e.g., "#FF0000" or "FF0000").
-
+        hex_color (str): Color in hexadecimal format.
+    
     Returns:
-        int: The decimal integer representation of the color.
-
+        int: Integer representation of the color.
+        
     Examples:
         >>> hex_to_int("#FF0000")
         16711680
-
         >>> hex_to_int("00FF00")
         65280
     """
@@ -72,9 +63,6 @@ def hex_to_int(hex_color):
 def int_to_hex(int_color):
     """
     Convert an integer to a hexadecimal color string.
-
-    This function converts a decimal integer to a 6-digit hexadecimal
-    color code with a '#' prefix.
 
     Args:
         int_color (int): The decimal integer representation of the color.
@@ -94,33 +82,13 @@ def int_to_hex(int_color):
 
 def determine_max_palette():
     """
-    Determine the largest possible color palette by systematically checking all colors
-    from #000000 to #FFFFFF in linear order.
-
-    This function implements a greedy algorithm that starts with black (#000000)
-    and systematically checks each subsequent color to build the largest possible
-    palette where all colors are perceptually distinct across different vision types.
-    The process is time-consuming as it checks all 16,777,216 possible colors.
-
+    Determine the largest possible color palette by checking all colors.
+    
     Returns:
-        tuple: A tuple containing:
-            - list[str]: List of compatible colors in hexadecimal format
-            - dict: Dictionary mapping colors to their discovery timestamps
-            - float: Total duration of the palette determination process in seconds
-
-    Examples:
-        >>> # Test with specific colors
-        >>> palette = ["#000000", "#FFFFFF", "#FF0000"]
-        >>> timestamps = {"#000000": 0.0, "#FFFFFF": 1.0, "#FF0000": 2.0}
-        >>> duration = 2.0
-        >>> len(palette) == 3  # Should have 3 colors
-        True
-        >>> "#000000" in palette  # Should contain black
-        True
-        >>> isinstance(timestamps, dict)  # Should return timestamps
-        True
-        >>> isinstance(duration, float)  # Should return duration
-        True
+        tuple:
+            list[str]: List of compatible colors in hexadecimal format.
+            dict: Dictionary mapping colors to their discovery timestamps.
+            float: Total duration of the palette determination process in seconds.
     """
     start_time = time.time()
     palette = []
@@ -183,23 +151,11 @@ def determine_max_palette():
 def save_palette_data(palette, color_timestamps, total_duration):
     """
     Save palette data to a CSV file in the data/ directory.
-
-    This function saves comprehensive information about the generated palette,
-    including the colors, their discovery timestamps, and the Delta E thresholds
-    used for compatibility checks. The data is appended to an existing file or
-    creates a new one if it doesn't exist.
-
+    
     Args:
-        palette (list[str]): List of colors in the palette in hexadecimal format.
-        color_timestamps (dict): Dictionary mapping colors to their discovery timestamps.
-        total_duration (float): Total duration of the palette determination process in seconds.
-
-    Returns:
-        None
-
-    Examples:
-        >>> save_palette_data(["#000000", "#FF0000"], {"#000000": 0.0, "#FF0000": 1.5}, 2.0)
-        Palette data saved to data/data_pal_max.csv
+        palette (list[str]): List of colors in the palette.
+        color_timestamps (dict): Dictionary mapping colors to discovery timestamps.
+        total_duration (float): Total duration in seconds.
     """
     filename = "data/data_pal_max.csv"
     file_exists = os.path.isfile(filename)
@@ -232,20 +188,9 @@ def save_palette_data(palette, color_timestamps, total_duration):
 def save_palette_colors(palette):
     """
     Save palette colors to a CSV file in the palettes/ directory.
-
-    This function saves the list of colors in the palette to a CSV file,
-    with each color on a new line. The file is created in the palettes/
-    directory, which is created if it doesn't exist.
-
+    
     Args:
-        palette (list[str]): List of colors in the palette in hexadecimal format.
-
-    Returns:
-        None
-
-    Examples:
-        >>> save_palette_colors(["#000000", "#FF0000", "#00FF00"])
-        Palette colors saved to palettes/palettes_max.csv
+        palette (list[str]): List of colors in the palette.
     """
     filename = "palettes/palettes_max.csv"
     
@@ -260,23 +205,11 @@ def save_palette_colors(palette):
 
 def save_color_timestamps(color_timestamps, total_duration):
     """
-    Save color discovery timestamps to a separate CSV file for analysis.
-
-    This function saves detailed timing information about when each color
-    was discovered during the palette generation process. The data includes
-    the color, its discovery time, total duration, and the Delta E thresholds
-    used for compatibility checks.
-
+    Save color discovery timestamps to a CSV file.
+    
     Args:
-        color_timestamps (dict): Dictionary mapping colors to their discovery timestamps.
-        total_duration (float): Total duration of the palette determination process in seconds.
-
-    Returns:
-        None
-
-    Examples:
-        >>> save_color_timestamps({"#000000": 0.0, "#FF0000": 1.5}, 2.0)
-        Color timestamps saved to data/color_timestamps.csv
+        color_timestamps (dict): Dictionary mapping colors to discovery timestamps.
+        total_duration (float): Total duration in seconds.
     """
     filename = "data/color_timestamps.csv"
     
