@@ -4,7 +4,6 @@ import time
 import os
 from tqdm import tqdm 
 import csv
-import sys
 
 try:
     from convert_colors import convert_colors
@@ -15,7 +14,7 @@ except ImportError:
 
 def is_compatible_with_palette(new_color_hex, palette_colors):
     """
-    Check if a new color is compatible with all colors in the existing palette.
+    Check if a new color is compatible with all colors in the existing palette
     
     Args:
         new_color_hex (str): Hexadecimal color (e.g., "#FF0000").
@@ -43,7 +42,7 @@ def is_compatible_with_palette(new_color_hex, palette_colors):
 
 def hex_to_int(hex_color):
     """
-    Convert a hexadecimal color string to its integer representation.
+    Convert a hex color string to integer
     
     Args:
         hex_color (str): Color in hexadecimal format.
@@ -62,7 +61,7 @@ def hex_to_int(hex_color):
 
 def int_to_hex(int_color):
     """
-    Convert an integer to a hexadecimal color string.
+    Convert an integer to hex color string
 
     Args:
         int_color (int): The decimal integer representation of the color.
@@ -102,7 +101,6 @@ def determine_max_palette():
     
     print("Systematically checking all hex colors...")
     
-
     # Create progress bar
     with tqdm(total=total_colors) as pbar:
         pbar.update(1)  # Update for first color
@@ -131,7 +129,6 @@ def determine_max_palette():
     end_time = time.time()
     total_duration = end_time - start_time
     
-    
     print(f"\nComplete palette determined in {total_duration:.2f} seconds")
     print(f"Total colors checked: {colors_checked:,}")
     print(f"Number of colors in palette: {len(palette)}")
@@ -140,7 +137,7 @@ def determine_max_palette():
 
 def save_palette_data(palette, color_timestamps, total_duration):
     """
-    Save palette data to a CSV file in the data/ directory.
+    Save palette data to a CSV file in the data/ directory
     
     Args:
         palette (list[str]): List of colors in the palette.
@@ -177,7 +174,7 @@ def save_palette_data(palette, color_timestamps, total_duration):
 
 def save_palette_colors(palette):
     """
-    Save palette colors to a CSV file in the palettes/ directory.
+    Save palette colors to a CSV file in the palettes/ directory
     
     Args:
         palette (list[str]): List of colors in the palette.
@@ -195,7 +192,7 @@ def save_palette_colors(palette):
 
 def save_color_timestamps(color_timestamps, total_duration):
     """
-    Save color discovery timestamps to a CSV file.
+    Save color discovery timestamps to a separate CSV file for analysis
     
     Args:
         color_timestamps (dict): Dictionary mapping colors to discovery timestamps.
